@@ -52,12 +52,6 @@ nav .cta:hover{background:var(--sage-dark);}
   opacity:0; transition:opacity 1.2s ease;
 }
 .hero-bg-layer.active{opacity:1;}
-.hero-bg-container::after{
-  /* soft linen-tinted overlay so text stays legible over any photo */
-  content:'';
-  position:absolute; inset:0;
-  background:rgba(246,241,231,0.42);
-}
 .hero-content{
   position:relative; z-index:1;
   max-width:640px; margin:0 auto;
