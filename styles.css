@@ -39,7 +39,26 @@ nav .cta{
 nav .cta:hover{background:var(--sage-dark);}
 
 /* ---------- Hero ---------- */
-.hero{text-align:center; padding:120px 6vw 90px;}
+.hero{
+  position:relative; overflow:hidden;
+  text-align:center; padding:120px 6vw 90px;
+}
+.hero-bg-container{
+  position:absolute; inset:0; z-index:0;
+}
+.hero-bg-layer{
+  position:absolute; inset:0;
+  background-size:cover; background-position:center;
+  opacity:0; transition:opacity 1.2s ease;
+}
+.hero-bg-layer.active{opacity:1;}
+.hero-bg-container::after{
+  /* soft linen-tinted overlay so text stays legible over any photo */
+  content:'';
+  position:absolute; inset:0;
+  background:rgba(246,241,231,0.82);
+}
+.hero-content{position:relative; z-index:1;}
 .hero .sprig{width:60px; height:22px; margin:0 auto 26px;}
 .hero .eyebrow{
   font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase;
