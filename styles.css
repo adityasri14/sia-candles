@@ -56,9 +56,17 @@ nav .cta:hover{background:var(--sage-dark);}
   /* soft linen-tinted overlay so text stays legible over any photo */
   content:'';
   position:absolute; inset:0;
-  background:rgba(246,241,231,0.82);
+  background:rgba(246,241,231,0.42);
 }
-.hero-content{position:relative; z-index:1;}
+.hero-content{
+  position:relative; z-index:1;
+  max-width:640px; margin:0 auto;
+  padding:44px 40px;
+  background:rgba(246,241,231,0.55);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-radius:12px;
+}
 .hero .sprig{width:60px; height:22px; margin:0 auto 26px;}
 .hero .eyebrow{
   font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase;
