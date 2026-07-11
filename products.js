@@ -19,11 +19,14 @@ const products = [
   { name: "Citrus Grove",    scent: "Orange peel, bergamot, mint",  price: 449, image: "images/hero-2.jpg", bestseller: false },
   { name: "Midnight Fig",    scent: "Fig, oud, dark musk",          price: 599, image: "images/hero-4.jpeg", bestseller: false },
   { name: "Lavender Fields", scent: "Lavender, chamomile, oatmilk", price: 449, image: "images/hero-5.jpeg", bestseller: false },
-  { name: "Spiced Chai",     scent: "Cinnamon, clove, cardamom",    price: 499, image: "images/hero-6.jpeg", bestseller: false },
-  { name: "Vanilla",     scent: "Vanilla, cardamom",    price: 499, image: "images/hero-10.jpeg", bestseller: false },
+  { name: "Glow Candles",     scent: "Cinnamon, clove, cardamom",    price: 499, image: "images/hero-16.png", bestseller: false },
+  { name: "Vanilla",     scent: "Vanilla, cardamom",    price: 499, image: "images/hero-13.png", bestseller: false },
   { name: "Forest bloom",     scent: "Forest, fruit",    price: 499, image: "images/hero-7.jpeg", bestseller: false },
-   { name: "First rain",     scent: "First Rain",    price: 499, image: "images/hero-8.jpeg", bestseller: false },
+   { name: "First rain",     scent: "First Rain",    price: 499, image: "images/hero-18.png", bestseller: false },
    { name: "Jasmine",     scent: "Jasmine",    price: 499, image: "images/hero-9.jpeg", bestseller: false },
+  { name: "Japnese cherry",     scent: "Japnese cherry",    price: 499, image: "images/hero-15.png", bestseller: false },
+   { name: "Tulip",     scent: "Tube rose",    price: 499, image: "images/hero-14.png", bestseller: false },
+  { name: "Teddy",     scent: "Fruity fun",    price: 499, image: "images/hero-12.png", bestseller: false },
 ];
 
 // Business contact info — all in one place.
