@@ -20,7 +20,7 @@ const products = [
   { name: "Midnight Fig",    scent: "Fig, oud, dark musk",          price: 599, image: "images/hero-4.jpeg", bestseller: false },
   { name: "Lavender Fields", scent: "Lavender, chamomile, oatmilk", price: 449, image: "images/hero-5.jpeg", bestseller: false },
   { name: "Spiced Chai",     scent: "Cinnamon, clove, cardamom",    price: 499, image: "images/hero-6.jpeg", bestseller: false },
-  { name: "Vanilla",     scent: "Vanilla, cardamom",    price: 499, image: "images/hero-6.jpeg", bestseller: false },
+  { name: "Vanilla",     scent: "Vanilla, cardamom",    price: 499, image: "images/hero-10.jpeg", bestseller: false },
   { name: "Forest bloom",     scent: "Forest, fruit",    price: 499, image: "images/hero-7.jpeg", bestseller: false },
    { name: "First rain",     scent: "First Rain",    price: 499, image: "images/hero-8.jpeg", bestseller: false },
    { name: "Jasmine",     scent: "Jasmine",    price: 499, image: "images/hero-9.jpeg", bestseller: false },
