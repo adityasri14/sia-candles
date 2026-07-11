@@ -6,8 +6,8 @@
 // ---------------------------------------------------------
 
 const heroImages = [
-  { url: "images/hero-1.jpg", alt: "Sia Scented Candles — floral shaped candles in glass jars" },
-  { url: "images/hero-2.jpg", alt: "Sia Scented Candles — flat lay of flower-topped candles" },
+  { url: "images/hero-9.jpeg", alt: "Sia Scented Candles — floral shaped candles in glass jars" },
+  { url: "images/hero-4.jpeg", alt: "Sia Scented Candles — flat lay of flower-topped candles" },
   { url: "images/hero-3.jpg", alt: "Sia Scented Candles — labeled candles with pink floral tops" },
 ];
 
