@@ -14,10 +14,7 @@
 // ---------------------------------------------------------
 
 const products = [
-  { name: "Rose Petrichor",  scent: "Rose, damp earth, cedar",      price: 549, image: "images/hero-1.jpg", bestseller: true },
-  { name: "Amber Dusk",      scent: "Amber, sandalwood, vanilla",   price: 499, image: "images/hero-3.jpg", bestseller: true },
-  { name: "Citrus Grove",    scent: "Orange peel, bergamot, mint",  price: 449, image: "images/hero-2.jpg", bestseller: false },
-  { name: "Midnight Fig",    scent: "Fig, oud, dark musk",          price: 599, image: "images/hero-4.jpeg", bestseller: false },
+   { name: "Midnight Fig",    scent: "Fig, oud, dark musk",          price: 599, image: "images/hero-4.jpeg", bestseller: false },
   { name: "Lavender Fields", scent: "Lavender, chamomile, oatmilk", price: 449, image: "images/hero-5.jpeg", bestseller: false },
   { name: "Glow Candles",     scent: "Cinnamon, clove, cardamom",    price: 499, image: "images/hero-16.png", bestseller: false },
   { name: "Vanilla",     scent: "Vanilla, cardamom",    price: 499, image: "images/hero-13.png", bestseller: false },
