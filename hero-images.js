@@ -12,9 +12,9 @@
 // ---------------------------------------------------------
 
 const heroImages = [
-  { url: "https://www.pexels.com/photo/serene-candlelight-arrangement-in-dim-setting-29329365/", alt: "Candle photo 1" },
-  { url: "https://www.pexels.com/photo/a-white-lighted-candle-in-close-up-photography-7233184/", alt: "Candle photo 2" },
-  { url: "https://www.pexels.com/photo/festive-candle-with-christmas-tree-decor-35000890/", alt: "Candle photo 3" },
+  { url: "images/1.jpg", alt: "Candle photo 1" },
+     { url: "images/2.jpg", alt: "Candle photo 2" },
+     { url: "images/3.jpg", alt: "Candle photo 3" },
 ];
 
 // How long each image stays on screen before crossfading, in milliseconds.
