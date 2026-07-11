@@ -8,163 +8,72 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --linen:#f6f1e7;
-    --linen-soft:#efe7d6;
-    --ink:#3a3530;
-    --ink-muted:#847a6c;
-    --sage:#7a8b6f;
-    --sage-dark:#5f6f56;
-    --clay:#b87456;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:'Karla', sans-serif;
-    background:var(--linen);
-    color:var(--ink);
-    line-height:1.65;
-  }
-  h1,h2,h3{font-family:'Cormorant Garamond', serif; font-weight:600;}
-  a{color:inherit;}
-  img{max-width:100%; display:block;}
-
-  nav{
-    position:sticky; top:0; z-index:50;
-    display:flex; justify-content:space-between; align-items:center;
-    padding:22px 6vw;
-    background:rgba(246,241,231,0.92);
-    backdrop-filter:blur(6px);
-    border-bottom:1px solid rgba(122,139,111,0.2);
-  }
-  nav .brand{font-family:'Cormorant Garamond', serif; font-size:1.5rem; font-weight:600; color:var(--sage-dark);}
-  nav ul{list-style:none; display:flex; gap:34px; font-size:0.9rem;}
-  nav a{text-decoration:none; color:var(--ink-muted); transition:color .2s;}
-  nav a:hover, nav a:focus-visible{color:var(--clay);}
-  nav .cta{
-    background:var(--sage); color:#fff; padding:10px 20px;
-    font-weight:500; font-size:0.85rem; text-decoration:none; border-radius:2px;
-  }
-  nav .cta:hover{background:var(--sage-dark);}
-
-  .hero{
-    text-align:center; padding:120px 6vw 90px;
-  }
-  .hero .sprig{
-    width:60px; height:22px; margin:0 auto 26px;
-  }
-  .hero .eyebrow{
-    font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase;
-    color:var(--sage-dark); margin-bottom:20px;
-  }
-  .hero h1{
-    font-size:clamp(2.4rem, 5.6vw, 4rem); max-width:760px; margin:0 auto 22px;
-    line-height:1.12; font-style:italic; color:var(--ink);
-  }
-  .hero p{
-    max-width:480px; margin:0 auto 36px; color:var(--ink-muted); font-size:1.02rem;
-  }
-  .btn-row{display:flex; gap:16px; justify-content:center; flex-wrap:wrap;}
-  .btn{
-    display:inline-block; padding:14px 30px;
-    text-decoration:none; font-weight:500; font-size:0.9rem;
-    transition:background .2s, color .2s, border-color .2s;
-    border-radius:2px;
-  }
-  .btn-primary{background:var(--clay); color:#fff;}
-  .btn-primary:hover{background:#a3603f;}
-  .btn-outline{border:1px solid var(--sage); color:var(--sage-dark);}
-  .btn-outline:hover{background:var(--sage); color:#fff;}
-
-  section{padding:80px 6vw;}
-  .section-head{max-width:600px; margin:0 auto 50px; text-align:center;}
-  .section-head .eyebrow{
-    font-size:0.8rem; letter-spacing:0.15em; text-transform:uppercase;
-    color:var(--clay); margin-bottom:12px;
-  }
-  .section-head h2{font-size:clamp(1.8rem, 3.6vw, 2.4rem); font-style:italic;}
-
-  .grid{
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
-    gap:30px; max-width:1180px; margin:0 auto;
-  }
-  .card{
-    background:var(--linen-soft);
-    border-radius:4px; overflow:hidden;
-    transition:transform .25s, box-shadow .25s;
-  }
-  .card:hover{transform:translateY(-3px); box-shadow:0 12px 26px rgba(58,53,48,0.08);}
-  .card .img{
-    aspect-ratio:1/1;
-    background:linear-gradient(160deg, #e3dac4, #d8cdb2);
-    display:flex; align-items:center; justify-content:center;
-    color:var(--ink-muted); font-size:0.85rem; font-family:'Cormorant Garamond', serif; font-style:italic;
-    position:relative;
-  }
-  .card .info{padding:18px 20px 22px;}
-  .card .sprig-divider{width:26px; height:1px; background:var(--sage); margin-bottom:12px;}
-  .card .name{font-family:'Cormorant Garamond', serif; font-size:1.25rem; font-style:italic; margin-bottom:4px;}
-  .card .scent{color:var(--ink-muted); font-size:0.85rem; margin-bottom:14px;}
-  .card .row{display:flex; justify-content:space-between; align-items:center;}
-  .card .price{font-weight:600; font-size:1.02rem; color:var(--ink);}
-  .card .order{
-    font-size:0.82rem; text-decoration:none; color:var(--clay); font-weight:500;
-    border-bottom:1px solid var(--clay); padding-bottom:1px;
-  }
-  .card .order:hover{color:#a3603f; border-color:#a3603f;}
-
-  .about{background:var(--linen-soft);}
-  .about-grid{
-    max-width:900px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr 1fr;
-    gap:36px; text-align:center;
-  }
-  .about-grid .sprig-divider{width:24px; height:1px; background:var(--sage); margin:0 auto 14px;}
-  .about-grid h3{font-size:1.2rem; margin-bottom:10px; font-style:italic; color:var(--sage-dark);}
-  .about-grid p{color:var(--ink-muted); font-size:0.9rem;}
-
-  .contact{text-align:center;}
-  .contact .btn-primary{margin-top:8px;}
-
-  footer{
-    border-top:1px solid rgba(122,139,111,0.25);
-    padding:36px 6vw; text-align:center; font-size:0.85rem; color:var(--ink-muted);
-  }
-  footer a{color:var(--clay); text-decoration:none;}
-
-  @media (max-width:640px){
-    nav ul{display:none;}
-    .about-grid{grid-template-columns:1fr; gap:30px;}
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <nav>
-  <div class="brand">SIA Scented Candles</div>
+  <div class="brand">Sia</div>
   <ul>
     <li><a href="#shop">Shop</a></li>
-    <li><a href="#about">Our story</a></li>
+    <li><a href="#about">Story</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a class="cta" href="#shop">Browse candles</a>
+  <a class="cta" href="#shop">Shop now</a>
 </nav>
 
 <header class="hero">
-  <svg class="sprig" viewBox="0 0 60 22" aria-hidden="true">
-    <path d="M2 11 Q30 2 58 11" fill="none" stroke="#7a8b6f" stroke-width="1"/>
-    <path d="M14 11 Q16 5 20 4" fill="none" stroke="#7a8b6f" stroke-width="1"/>
-    <path d="M30 11 Q30 3 30 1" fill="none" stroke="#7a8b6f" stroke-width="1"/>
-    <path d="M46 11 Q44 5 40 4" fill="none" stroke="#7a8b6f" stroke-width="1"/>
-  </svg>
-  <div class="eyebrow">Hand-poured · small batch</div>
-  <h1>Candles made to be lived with, not just lit</h1>
-  <p>Soy wax, cotton wicks, and scents blended in small batches. Every candle is poured to order from our home studio.</p>
-  <div class="btn-row">
-    <a class="btn btn-primary" href="#shop">Browse the collection</a>
-    <a class="btn btn-outline" href="https://wa.me/919999999999?text=Hi!%20I'm%20interested%20in%20your%20candles" target="_blank" rel="noopener">Chat on WhatsApp</a>
+  <div class="hero-bg-container" id="hero-bg-container" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="eyebrow">Hand-poured · small batch</div>
+    <h1>Candles made to be lived with</h1>
+    <div class="btn-row">
+      <a class="btn btn-light" href="#shop">Shop the collection</a>
+      <a class="btn btn-light" data-wa-message="Hi! I'm interested in your candles" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+    </div>
   </div>
 </header>
+
+<div class="stat-strip">
+  <div class="stat"><div class="label">Hand-poured</div></div>
+  <div class="stat"><div class="label">Soy wax · cotton wick</div></div>
+  <div class="stat"><div class="label">Made to order</div></div>
+  <div class="stat"><div class="label">Pan-India shipping</div></div>
+</div>
+
+<section style="padding:0;">
+  <div class="editorial-banner">
+    <div class="bg" style="background-image:url('images/hero-3.jpg');"></div>
+    <div class="content">
+      <div class="eyebrow">This week's pour</div>
+      <h2>Bestsellers</h2>
+      <p>Our most-ordered scents, poured fresh this week.</p>
+      <a class="btn btn-light" href="#shop">Shop the collection</a>
+    </div>
+  </div>
+</section>
+
+<section id="bestsellers">
+  <div class="section-head">
+    <div class="eyebrow">Loved by customers</div>
+    <h2>This week's bestsellers</h2>
+  </div>
+  <div class="grid" id="bestseller-grid"></div>
+</section>
+
+<!-- Shop by scent family — placeholder categories, not yet wired to real filtering -->
+<section id="scent-families">
+  <div class="section-head center">
+    <div class="eyebrow">Find your scent (coming soon)</div>
+    <h2>Shop by fragrance family</h2>
+  </div>
+  <div class="scent-editorial">
+    <div class="tile"><span>Floral</span></div>
+    <div class="tile"><span>Warm &amp; woody</span></div>
+    <div class="tile"><span>Fresh &amp; citrus</span></div>
+    <div class="tile"><span>Calming</span></div>
+  </div>
+</section>
 
 <section id="shop">
   <div class="section-head">
@@ -174,77 +83,68 @@
   <div class="grid" id="product-grid"></div>
 </section>
 
-<section class="about" id="about">
-  <div class="section-head">
-    <div class="eyebrow">Our story</div>
-    <h2>Why we pour in small batches</h2>
-  </div>
-  <div class="about-grid">
+<section id="about">
+  <div class="story-split">
+    <div class="photo" style="background-image:url('images/hero-2.jpg');"></div>
     <div>
-      <div class="sprig-divider"></div>
-      <h3>Soy wax</h3>
-      <p>Clean-burning and slower than paraffin, so every candle lasts longer on your shelf and in your room.</p>
-    </div>
-    <div>
-      <div class="sprig-divider"></div>
-      <h3>Small batches</h3>
-      <p>We pour in limited runs so every scent stays fresh and true, not sitting in a warehouse for months.</p>
-    </div>
-    <div>
-      <div class="sprig-divider"></div>
-      <h3>Made to order</h3>
-      <p>Most candles are poured within a few days of your order — nothing sits on a shelf waiting to be bought.</p>
+      <div class="section-head" style="margin-bottom:32px;">
+        <div class="eyebrow">Our story</div>
+      </div>
+      <p class="quote">"Every candle we pour is a small pause — a moment you light on purpose, just for yourself."</p>
+      <div class="attribution">Sia, founder</div>
     </div>
   </div>
 </section>
 
-<section class="contact" id="contact">
-  <div class="section-head">
-    <div class="eyebrow">Get in touch</div>
-    <h2>Questions, custom orders, or bulk gifting</h2>
+<div class="insta-strip">
+  <div class="section-head center" style="margin-bottom:0;">
+    <div class="eyebrow">Follow along</div>
+    <h2 data-instagram-handle>@sia_scentedcandles</h2>
   </div>
-  <p style="max-width:480px; margin:0 auto 8px; color:var(--ink-muted);">Message us on WhatsApp for the fastest reply, or drop an email — we usually respond within a day.</p>
-  <a class="btn btn-primary" href="https://wa.me/919999999999?text=Hi!%20I%20have%20a%20question%20about%20your%20candles" target="_blank" rel="noopener">Message us on WhatsApp</a>
+  <div class="insta-grid" id="insta-grid"></div>
+  <a class="insta-handle" data-instagram-link href="#" target="_blank" rel="noopener">View on Instagram</a>
+</div>
+
+<section>
+  <div class="section-head">
+    <div class="eyebrow">Good to know</div>
+    <h2>Candle care</h2>
+  </div>
+  <div class="faq">
+    <div class="faq-item">
+      <h3>Should I trim the wick?</h3>
+      <p>Always trim to about 5mm before lighting — it prevents smoking and helps the scent carry evenly through the room.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How long should I burn it the first time?</h3>
+      <p>Let the wax pool reach the edges of the jar on the first burn, usually 2-3 hours. This sets an even burn for the candle's whole life.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What's the best way to put it out?</h3>
+      <p>Use a snuffer or dip the wick into the wax pool and straighten it, rather than blowing — this avoids spatter and keeps the wick ready for next time.</p>
+    </div>
+  </div>
+</section>
+
+<section class="editorial-banner" style="height:50vh; min-height:360px; padding:0;" id="contact">
+  <div class="bg" style="background-image:url('images/hero-3.jpg');"></div>
+  <div class="content">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Custom orders &amp; bulk gifting</h2>
+    <a class="btn btn-light" data-wa-message="Hi! I have a question about your candles" href="#" target="_blank" rel="noopener">Message us on WhatsApp</a>
+  </div>
 </section>
 
 <footer>
-  <p>SIA Scented Candles · siascentedcandle.com</p>
-  <p style="margin-top:6px;">hello@siascentedcandle.com · <a href="https://wa.me/919999999999" target="_blank" rel="noopener">WhatsApp</a></p>
+  <p>SIA SCENTED CANDLES · SIASCENTEDCANDLE.COM</p>
+  <p style="margin-top:8px;">hello@siascentedcandle.com · <a data-wa-message="Hi!" href="#" target="_blank" rel="noopener">WhatsApp</a> · <a data-instagram-link href="#" target="_blank" rel="noopener">Instagram</a></p>
 </footer>
 
-<script>
-  // EDIT YOUR PRODUCTS HERE — this is the only part you need to touch to update the catalog.
-  // price is in rupees. image can be a URL (upload photos anywhere online and paste the link here).
-  const products = [
-    { name: "Amber Dusk",      scent: "Amber, sandalwood, vanilla",   price: 499, image: "" },
-    { name: "Citrus Grove",    scent: "Orange peel, bergamot, mint",  price: 449, image: "" },
-    { name: "Rose Petrichor",  scent: "Rose, damp earth, cedar",      price: 549, image: "" },
-    { name: "Midnight Fig",    scent: "Fig, oud, dark musk",          price: 599, image: "" },
-    { name: "Lavender Fields", scent: "Lavender, chamomile, oatmilk", price: 449, image: "" },
-    { name: "Spiced Chai",     scent: "Cinnamon, clove, cardamom",    price: 499, image: "" },
-  ];
-
-  const grid = document.getElementById('product-grid');
-  products.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    const imgContent = p.image
-      ? `<img src="${p.image}" alt="${p.name} candle" style="width:100%;height:100%;object-fit:cover;">`
-      : p.name;
-    card.innerHTML = `
-      <div class="img">${imgContent}</div>
-      <div class="info">
-        <div class="sprig-divider"></div>
-        <div class="name">${p.name}</div>
-        <div class="scent">${p.scent}</div>
-        <div class="row">
-          <span class="price">₹${p.price}</span>
-          <a class="order" href="https://wa.me/919999999999?text=Hi!%20I'd%20like%20to%20order%20the%20${encodeURIComponent(p.name)}%20candle" target="_blank" rel="noopener">Order →</a>
-        </div>
-      </div>`;
-    grid.appendChild(card);
-  });
-</script>
-
+<script src="products.js"></script>
+<script src="hero-images.js"></script>
+<script src="instagram-photos.js"></script>
+<script src="script.js"></script>
+<script src="heroSlider.js"></script>
+<script src="instagramGrid.js"></script>
 </body>
 </html>
