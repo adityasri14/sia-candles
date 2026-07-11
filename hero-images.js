@@ -6,9 +6,9 @@
 // ---------------------------------------------------------
 
 const heroImages = [
-  { url: "images/hero-9.jpeg", alt: "Sia Scented Candles — floral shaped candles in glass jars" },
-  { url: "images/hero-4.jpeg", alt: "Sia Scented Candles — flat lay of flower-topped candles" },
-  { url: "images/hero-3.jpg", alt: "Sia Scented Candles — labeled candles with pink floral tops" },
+  { url: "images/hero-19.png", alt: "Sia Scented Candles — floral shaped candles in glass jars" },
+  { url: "images/hero-17.png", alt: "Sia Scented Candles — flat lay of flower-topped candles" },
+  { url: "images/hero-18.png", alt: "Sia Scented Candles — labeled candles with pink floral tops" },
 ];
 
 // How long each image stays on screen before crossfading, in milliseconds.
