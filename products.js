@@ -16,7 +16,7 @@
 const products = [
    { name: "Midnight Fig",    scent: "Fig, oud, dark musk",          price: 599, image: "images/hero-4.jpeg", bestseller: false },
   { name: "Lavender Fields", scent: "Lavender, chamomile, oatmilk", price: 449, image: "images/hero-5.jpeg", bestseller: false },
-  { name: "Glow Candles",     scent: "Cinnamon, clove, cardamom",    price: 499, image: "images/hero-16.png", bestseller: false },
+  { name: "Glow Candles",     scent: "Cinnamon, clove, cardamom",    price: 499, image: "images/hero-16.png", bestseller: true },
   { name: "Vanilla",     scent: "Vanilla, cardamom",    price: 499, image: "images/hero-13.png", bestseller: false },
     { name: "First rain",     scent: "First Rain",    price: 499, image: "images/hero-18.png", bestseller: false },
    { name: "Jasmine",     scent: "Jasmine",    price: 499, image: "images/hero-19.png", bestseller: false },
