@@ -1,129 +1,125 @@
-// ---------------------------------------------------------
-// RENDER LOGIC — now wired to use Razorpay Standard Checkout
-// via minimal serverless backend endpoints.
-// ---------------------------------------------------------
+// 1. Render Products Dynamically
+function renderProducts() {
+    const productGrid = document.getElementById('product-grid');
+    if (!productGrid) return;
 
-async function handleCheckout(priceInRupees, productName) {
-  try {
-    // 1. Convert rupees to paise (e.g., 299 -> 29900)
-    const amountInPaise = priceInRupees * 100;
+    productGrid.innerHTML = products.map(product => `
+        <div class="product-card" data-id="${product.id}">
+            ${product.isBestseller ? '<span class="tag">BESTSELLER</span>' : ''}
+            <div class="product-image-wrapper">
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <p class="product-notes">${product.notes}</p>
+                <div class="product-footer">
+                    <span class="price">₹${product.price}</span>
+                    <button class="buy-now-btn">BUY NOW</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
 
-    // 2. Call the serverless backend order endpoint
-    const response = await fetch('/api/create-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: amountInPaise, currency: 'INR' })
-    });
+    // Attach click events to all the newly rendered buttons
+    initCheckout();
+}
 
-    const orderData = await response.json();
-    if (!response.ok) throw new Error(orderData.error);
-
-    // 3. Configure and open Razorpay Modal
-    const options = {
-      "key": "rzp_test_TCeSxhXP2QYPl5", // Your public test key
-      "amount": orderData.amount,
-      "currency": orderData.currency,
-      "name": "Sia Candles",
-      "description": `Purchase: ${productName}`,
-      "order_id": orderData.order_id,
-      "handler": async function (authResponse) {
-        // 4. Call serverless verification endpoint on authorization success
-        const verifyResponse = await fetch('/api/verify-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            razorpay_order_id: authResponse.razorpay_order_id,
-            razorpay_payment_id: authResponse.razorpay_payment_id,
-            razorpay_signature: authResponse.razorpay_signature
-          })
-        });
-
-        const verifyData = await verifyResponse.json();
-        if (verifyResponse.ok && verifyData.status === "success") {
-          alert("Payment verified successfully! Order placed.");
-        } else {
-          alert(`Verification failed: ${verifyData.message}`);
-        }
-      },
-      "theme": { "color": "#121212" }
-    };
-
-    const rzp = new window.Razorpay(options);
+// 2. Handle Razorpay Checkout Flow
+function initCheckout() {
+    const buyButtons = document.querySelectorAll('.buy-now-btn');
     
-    rzp.on('payment.failed', function (response) {
-      alert(`Payment failed: ${response.error.description}`);
+    buyButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const card = e.target.closest('.product-card');
+            const priceText = card.querySelector('.price').innerText;
+            
+            // Clean the currency symbol and convert standard price to paise (e.g., 499 -> 49900)
+            const cleanAmount = parseInt(priceText.replace(/[^0-9]/g, '')) * 100;
+            
+            // Set loading state on button
+            const originalText = button.innerText;
+            button.innerText = "PROCESSING...";
+            button.disabled = true;
+
+            try {
+                // Call Vercel serverless backend function to create order
+                const response = await fetch('/api/create-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: cleanAmount,
+                        currency: 'INR'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.details || data.error || 'Failed to create order');
+                }
+
+                // Razorpay checkout modal configurations
+                const options = {
+                    key: 'rzp_test_TCeSxhXP2QYPl5', // Your active Razorpay Test Key ID
+                    amount: data.amount,
+                    currency: data.currency,
+                    name: 'SIA Scented Candles',
+                    description: 'Hand-poured Small Batch Soy Candles',
+                    order_id: data.order_id,
+                    handler: async function (paymentResponse) {
+                        // Send payment details to verify-payment backend endpoint
+                        try {
+                            const verifyResponse = await fetch('/api/verify-payment', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    razorpay_order_id: paymentResponse.razorpay_order_id,
+                                    razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                                    razorpay_signature: paymentResponse.razorpay_signature
+                                })
+                            });
+
+                            const verifyData = await verifyResponse.json();
+                            
+                            if (verifyData.status === 'success') {
+                                alert('Payment Successful! Thank you for ordering from SIA Candles.');
+                            } else {
+                                alert('Payment verification failed: ' + verifyData.message);
+                            }
+                        } catch (err) {
+                            alert('Error verifying payment.');
+                        }
+                    },
+                    prefill: {
+                        name: '',
+                        email: '',
+                        contact: ''
+                    },
+                    theme: {
+                        color: '#1a1a1a'
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.open();
+
+            } catch (error) {
+                console.error('Checkout Error:', error);
+                alert('Checkout error: ' + error.message);
+            } finally {
+                // Reset button UI state
+                button.innerText = originalText;
+                button.disabled = false;
+            }
+        });
     });
-
-    rzp.open();
-
-  } catch (error) {
-    alert(`Checkout error: ${error.message}`);
-  }
 }
 
-function renderProductCard(p) {
-  const card = document.createElement('div');
-  card.className = 'card';
-
-  const imgStyle = p.image
-    ? `background-image:url('${p.image}');`
-    : '';
-
-  const badge = p.bestseller ? 'Bestseller' : '';
-
-  card.innerHTML = `
-    <div class="img" style="${imgStyle}"></div>
-    <div class="eyebrow-small">${badge}</div>
-    <div class="name">${p.name}</div>
-    <div class="scent">${p.scent}</div>
-    <div class="row">
-      <span class="price">₹${p.price}</span>
-      <button class="order-btn" type="button">Buy Now</button>
-    </div>`;
-
-  // Attach the event listener to call Razorpay checkout securely
-  card.querySelector('.order-btn').addEventListener('click', () => {
-    handleCheckout(p.price, p.name);
-  });
-
-  return card;
-}
-
-function renderBestsellers() {
-  const row = document.getElementById('bestseller-grid');
-  if (!row) return;
-  const bestsellers = products.filter(p => p.bestseller);
-  bestsellers.forEach(p => row.appendChild(renderProductCard(p)));
-}
-
-function renderFullCollection() {
-  const grid = document.getElementById('product-grid');
-  if (!grid) return;
-  products.forEach(p => grid.appendChild(renderProductCard(p)));
-}
-
-function buildWhatsappLink(message) {
-  return `https://wa.me/${businessInfo.whatsappNumber}?text=${encodeURIComponent(message)}`;
-}
-
-function wireStaticWhatsappLinks() {
-  document.querySelectorAll('[data-wa-message]').forEach(el => {
-    el.href = buildWhatsappLink(el.dataset.waMessage);
-  });
-}
-
-function wireInstagramLinks() {
-  document.querySelectorAll('[data-instagram-link]').forEach(el => {
-    el.href = businessInfo.instagramUrl;
-  });
-  document.querySelectorAll('[data-instagram-handle]').forEach(el => {
-    el.textContent = '@' + businessInfo.instagramHandle;
-  });
-}
-
+// 3. Initialize on Load
 document.addEventListener('DOMContentLoaded', () => {
-  renderBestsellers();
-  renderFullCollection();
-  wireStaticWhatsappLinks();
-  wireInstagramLinks();
+    renderProducts();
 });
