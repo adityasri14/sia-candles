@@ -1,16 +1,14 @@
-
 const Razorpay = require('razorpay');
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
-
 module.exports = async (req, res) => {
-  // Enable CORS
+  // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
@@ -22,6 +20,12 @@ module.exports = async (req, res) => {
     if (!amount || amount < 100) {
       return res.status(400).json({ error: 'Amount must be at least 100 paise.' });
     }
+
+    // Initialize inside handler to safely catch configuration/env failures
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
 
     const options = {
       amount: amount,
@@ -36,6 +40,10 @@ module.exports = async (req, res) => {
       currency: order.currency
     });
   } catch (error) {
-    return res.status(500).json({ error: error.message || 'Razorpay Order Creation Failed' });
+    // Force a JSON payload error response instead of an empty string crash
+    return res.status(500).json({ 
+      error: error.message || 'Razorpay Order Creation Failed',
+      details: error
+    });
   }
 };
