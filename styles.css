@@ -100,7 +100,7 @@ section{padding:110px 6vw;}
   display:flex; align-items:center;
   overflow:hidden;
 }
-.editorial-banner .bg{position:absolute; inset:0; background-size:cover; background-position:center; background-color:#3a352c;}
+.editorial-banner .bg{position:absolute; inset:0; background-size:contain; background-repeat:no-repeat; background-position:center; background-color:#211d18;}
 .editorial-banner .bg::after{content:''; position:absolute; inset:0; background:rgba(33,29,24,0.28);}
 .editorial-banner .content{position:relative; z-index:1; max-width:460px; margin-left:8vw; color:#f7f4ee;}
 .editorial-banner .eyebrow{font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:18px;}
@@ -112,11 +112,10 @@ section{padding:110px 6vw;}
   display:grid; grid-template-columns:1fr 1fr; gap:2px; max-width:1180px; margin:0 auto;
 }
 .scent-editorial .tile{
-  position:relative; aspect-ratio:3/4; overflow:hidden; background-size:cover; background-position:center;
+  position:relative; aspect-ratio:4/5; overflow:hidden; background-size:cover; background-position:center;
   background-color:#e7e0d0;
   display:flex; align-items:flex-end; padding:28px;
 }
-.scent-editorial .tile:nth-child(2n){aspect-ratio:3/2.2;}
 .scent-editorial .tile::after{content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(33,29,24,0.5), transparent 55%);}
 .scent-editorial .tile span{position:relative; z-index:1; color:#fff; font-family:'Cormorant Garamond', serif; font-style:italic; font-size:1.6rem;}
 
@@ -141,7 +140,7 @@ section{padding:110px 6vw;}
   display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:center;
   max-width:1180px; margin:0 auto;
 }
-.story-split .photo{aspect-ratio:4/5; background-size:cover; background-position:center; background-color:#e7e0d0;}
+.story-split .photo{aspect-ratio:1/1; background-size:cover; background-position:center; background-color:#e7e0d0;}
 .story-split .quote{
   font-family:'Cormorant Garamond', serif; font-style:italic; font-size:2rem; line-height:1.35; margin-bottom:24px;
 }
