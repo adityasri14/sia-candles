@@ -126,7 +126,7 @@ section{padding:110px 6vw;}
   gap:48px 32px; max-width:1180px; margin:0 auto;
 }
 .card .img{
-  aspect-ratio:4/5; background-size:cover; background-position:center;
+  aspect-ratio:4/3; background-size:cover; background-position:center;
   background-color:#e7e0d0; margin-bottom:18px; overflow:hidden;
 }
 .card .eyebrow-small{font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--clay); margin-bottom:8px; min-height:1em;}
@@ -179,4 +179,6 @@ footer a{color:var(--clay); text-decoration:none;}
   .scent-editorial{grid-template-columns:1fr;}
   .insta-grid{grid-template-columns:repeat(2, 1fr);}
   .editorial-banner .content{margin-left:6vw; margin-right:6vw;}
+  .hero{height:56vh; min-height:420px;}
+  .hero-bg-layer{background-position:center 40%;}
 }
