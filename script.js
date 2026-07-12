@@ -50,8 +50,14 @@ function initCheckout() {
                     throw new Error(data.details || data.error || 'Failed to create order');
                 }
 
+                // Key is injected at runtime from Vercel env via window.RAZORPAY_KEY_ID
+                const razorpayKey = window.RAZORPAY_KEY_ID;
+                if (!razorpayKey) {
+                    throw new Error('Razorpay key is not configured. Please contact support.');
+                }
+
                 const options = {
-                    key: window.RAZORPAY_KEY_ID || 'rzp_test_TCeSxhXP2QYPl5',
+                    key: razorpayKey,
                     amount: data.amount,
                     currency: data.currency,
                     name: 'SIA Scented Candles',
