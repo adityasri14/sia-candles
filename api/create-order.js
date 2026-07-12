@@ -14,8 +14,16 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
+  // 2. Fail early if Environment Variables are missing entirely
+  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    return res.status(500).json({ 
+      error: 'Configuration Missing', 
+      details: 'Razorpay API keys are not detected in the current Vercel deployment environment.'
+    });
+  }
+
   try {
-    // 2. Safely parse the request body if it hasn't been parsed yet
+    // 3. Handle unparsed body streams safely
     let body = req.body;
     if (typeof body === 'string') {
       try {
@@ -31,7 +39,7 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: 'Amount must be at least 100 paise.' });
     }
 
-    // 3. Initialize Razorpay inside the handler to ensure env variables are loaded
+    // 4. Initialize Razorpay instance safely
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -45,7 +53,6 @@ module.exports = async (req, res) => {
 
     const order = await razorpay.orders.create(options);
     
-    // 4. Force sending a clean JSON structure response
     return res.status(200).json({
       order_id: order.id,
       amount: order.amount,
@@ -54,8 +61,8 @@ module.exports = async (req, res) => {
 
   } catch (error) {
     return res.status(500).json({ 
-      error: error.message || 'Razorpay Order Creation Failed',
-      details: error.toString()
+      error: 'Razorpay Order Creation Failed',
+      details: error.message || error.toString()
     });
   }
 };
