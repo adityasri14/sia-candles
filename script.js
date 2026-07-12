@@ -20,38 +20,28 @@ function renderProducts() {
         </div>
     `).join('');
 
-    // Attach click events to all the newly rendered buttons
     initCheckout();
 }
 
 // 2. Handle Razorpay Checkout Flow
 function initCheckout() {
     const buyButtons = document.querySelectorAll('.buy-now-btn');
-    
+
     buyButtons.forEach(button => {
         button.addEventListener('click', async (e) => {
             const card = e.target.closest('.product-card');
             const priceText = card.querySelector('.price').innerText;
-            
-            // Clean the currency symbol and convert standard price to paise (e.g., 499 -> 49900)
             const cleanAmount = parseInt(priceText.replace(/[^0-9]/g, '')) * 100;
-            
-            // Set loading state on button
+
             const originalText = button.innerText;
             button.innerText = "PROCESSING...";
             button.disabled = true;
 
             try {
-                // Call Vercel serverless backend function to create order
                 const response = await fetch('/api/create-order', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        amount: cleanAmount,
-                        currency: 'INR'
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount: cleanAmount, currency: 'INR' })
                 });
 
                 const data = await response.json();
@@ -60,22 +50,18 @@ function initCheckout() {
                     throw new Error(data.details || data.error || 'Failed to create order');
                 }
 
-                // Razorpay checkout modal configurations
                 const options = {
-                    key: 'rzp_test_TCeSxhXP2QYPl5', // Your active Razorpay Test Key ID
+                    key: window.RAZORPAY_KEY_ID || 'rzp_test_TCeSxhXP2QYPl5',
                     amount: data.amount,
                     currency: data.currency,
                     name: 'SIA Scented Candles',
                     description: 'Hand-poured Small Batch Soy Candles',
                     order_id: data.order_id,
                     handler: async function (paymentResponse) {
-                        // Send payment details to verify-payment backend endpoint
                         try {
                             const verifyResponse = await fetch('/api/verify-payment', {
                                 method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
+                                headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({
                                     razorpay_order_id: paymentResponse.razorpay_order_id,
                                     razorpay_payment_id: paymentResponse.razorpay_payment_id,
@@ -84,7 +70,7 @@ function initCheckout() {
                             });
 
                             const verifyData = await verifyResponse.json();
-                            
+
                             if (verifyData.status === 'success') {
                                 alert('Payment Successful! Thank you for ordering from SIA Candles.');
                             } else {
@@ -94,14 +80,8 @@ function initCheckout() {
                             alert('Error verifying payment.');
                         }
                     },
-                    prefill: {
-                        name: '',
-                        email: '',
-                        contact: ''
-                    },
-                    theme: {
-                        color: '#1a1a1a'
-                    }
+                    prefill: { name: '', email: '', contact: '' },
+                    theme: { color: '#1a1a1a' }
                 };
 
                 const rzp = new Razorpay(options);
@@ -111,7 +91,6 @@ function initCheckout() {
                 console.error('Checkout Error:', error);
                 alert('Checkout error: ' + error.message);
             } finally {
-                // Reset button UI state
                 button.innerText = originalText;
                 button.disabled = false;
             }
