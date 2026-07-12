@@ -1,10 +1,64 @@
 // ---------------------------------------------------------
-// RENDER LOGIC — you shouldn't need to edit this file for
-// normal catalog updates. Edit products.js instead.
+// RENDER LOGIC — now wired to use Razorpay Standard Checkout
+// via minimal serverless backend endpoints.
 // ---------------------------------------------------------
 
-function buildWhatsappLink(message) {
-  return `https://wa.me/${businessInfo.whatsappNumber}?text=${encodeURIComponent(message)}`;
+async function handleCheckout(priceInRupees, productName) {
+  try {
+    // 1. Convert rupees to paise (e.g., 299 -> 29900)
+    const amountInPaise = priceInRupees * 100;
+
+    // 2. Call the serverless backend order endpoint
+    const response = await fetch('/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: amountInPaise, currency: 'INR' })
+    });
+
+    const orderData = await response.json();
+    if (!response.ok) throw new Error(orderData.error);
+
+    // 3. Configure and open Razorpay Modal
+    const options = {
+      "key": "rzp_test_TCeSxhXP2QYPl5", // Your public test key
+      "amount": orderData.amount,
+      "currency": orderData.currency,
+      "name": "Sia Candles",
+      "description": `Purchase: ${productName}`,
+      "order_id": orderData.order_id,
+      "handler": async function (authResponse) {
+        // 4. Call serverless verification endpoint on authorization success
+        const verifyResponse = await fetch('/api/verify-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            razorpay_order_id: authResponse.razorpay_order_id,
+            razorpay_payment_id: authResponse.razorpay_payment_id,
+            razorpay_signature: authResponse.razorpay_signature
+          })
+        });
+
+        const verifyData = await verifyResponse.json();
+        if (verifyResponse.ok && verifyData.status === "success") {
+          alert("Payment verified successfully! Order placed.");
+        } else {
+          alert(`Verification failed: ${verifyData.message}`);
+        }
+      },
+      "theme": { "color": "#121212" }
+    };
+
+    const rzp = new window.Razorpay(options);
+    
+    rzp.on('payment.failed', function (response) {
+      alert(`Payment failed: ${response.error.description}`);
+    });
+
+    rzp.open();
+
+  } catch (error) {
+    alert(`Checkout error: ${error.message}`);
+  }
 }
 
 function renderProductCard(p) {
@@ -15,7 +69,6 @@ function renderProductCard(p) {
     ? `background-image:url('${p.image}');`
     : '';
 
-  const orderLink = buildWhatsappLink(`Hi! I'd like to order the ${p.name} candle`);
   const badge = p.bestseller ? 'Bestseller' : '';
 
   card.innerHTML = `
@@ -25,8 +78,14 @@ function renderProductCard(p) {
     <div class="scent">${p.scent}</div>
     <div class="row">
       <span class="price">₹${p.price}</span>
-      <a class="order" href="${orderLink}" target="_blank" rel="noopener">Order</a>
+      <button class="order-btn" type="button">Buy Now</button>
     </div>`;
+
+  // Attach the event listener to call Razorpay checkout securely
+  card.querySelector('.order-btn').addEventListener('click', () => {
+    handleCheckout(p.price, p.name);
+  });
+
   return card;
 }
 
@@ -41,6 +100,10 @@ function renderFullCollection() {
   const grid = document.getElementById('product-grid');
   if (!grid) return;
   products.forEach(p => grid.appendChild(renderProductCard(p)));
+}
+
+function buildWhatsappLink(message) {
+  return `https://wa.me/${businessInfo.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
 function wireStaticWhatsappLinks() {
