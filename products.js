@@ -22,7 +22,7 @@ const products = [
    { name: "Jasmine",     scent: "Jasmine",    price: 499, image: "images/hero-19.png", bestseller: false },
   { name: "Japnese cherry",     scent: "Japnese cherry",    price: 499, image: "images/hero-15.png", bestseller: false },
    { name: "Tulip",     scent: "Tube rose",    price: 499, image: "images/hero-14.png", bestseller: false },
-  { name: "Teddy",     scent: "Fruity fun",    price: 499, image: "images/hero-12.png", bestseller: false },
+  { name: "Teddy",     scent: "Fruity fun",    price: 299, image: "images/hero-12.png", bestseller: false },
 ];
 
 // Business contact info — all in one place.
