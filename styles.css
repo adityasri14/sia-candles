@@ -109,7 +109,7 @@ section{padding:110px 6vw;}
 
 /* ---------- Scent family tiles (placeholder categories) ---------- */
 .scent-editorial{
-  display:grid; grid-template-columns:1fr 1fr; gap:2px; max-width:1180px; margin:0 auto;
+  display:grid; grid-template-columns: repeat(3, 1fr); gap:2px; max-width:1180px; margin:0 auto;
 }
 .scent-editorial .tile{
   position:relative; aspect-ratio:4/5; overflow:hidden; background-size:cover; background-position:center;
