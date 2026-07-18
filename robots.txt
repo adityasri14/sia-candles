@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /.netlify/functions/
+
+Sitemap: https://siascentedcandle.com/sitemap.xml
