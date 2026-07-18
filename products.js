@@ -30,8 +30,8 @@ const products = [
 // Business contact info — all in one place.
 const businessInfo = {
   whatsappNumber: "919673908048", // replace with your real number: countrycode + number, no + or spaces
-  email: "hello@siascentedcandle.com",
-  domain: "siascentedcandle.com",
+  email: "siascentedcandles@gmail.com",
+  domain: "gmail.com",
   instagramHandle: "sia_scentedcandles",
   instagramUrl: "https://instagram.com/sia_scentedcandles",
 };
